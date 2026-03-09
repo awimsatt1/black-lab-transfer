@@ -1,0 +1,82 @@
+---
+import { sanity } from "../lib/sanity";
+
+// Fetch featured products from Sanity (newest 4)
+const products = await sanity.fetch(`
+  *[_type == "product"] | order(_createdAt desc)[0...4]{
+    title,
+    slug,
+    category,
+    price,
+    originalPrice,
+    creator,
+    "description": pt::text(description),
+    "publisherName": publisher->name
+  }
+`);
+
+// Gradient colors for cover placeholders
+const gradients = [
+  "linear-gradient(135deg,#1a1a2e 0%,#e84855 100%)",
+  "linear-gradient(135deg,#2D3A8C 0%,#6B8CFF 100%)",
+  "linear-gradient(135deg,#FFB800 0%,#e84855 100%)",
+  "linear-gradient(135deg,#00BCD4 0%,#0D0D0D 100%)",
+];
+
+// Tag class mapping
+const tagClasses: Record<string, string> = {
+  consignment: "tag-consign",
+  indie: "tag-indie",
+  merch: "tag-new",
+};
+
+const tagLabels: Record<string, string> = {
+  consignment: "Consignment",
+  indie: "Indie Spotlight",
+  merch: "Merch",
+};
+
+// Fallback products if Sanity is empty
+const fallbackProducts = [
+  { title: "Invincible Compendium Vol. 1", category: "consignment", price: 40, creator: "Robert Kirkman & Cory Walker", publisherName: "Skybound / Image", description: "The complete saga of Mark Grayson — from first flight to full-on cosmic warfare. Over 1,000 pages of Kirkman and Walker's masterpiece." },
+  { title: "Saga Book One", category: "indie", price: 25, creator: "Brian K. Vaughan & Fiona Staples", publisherName: "Image Comics", description: "Star-crossed lovers from warring planets raise their daughter on the run. The definitive indie epic of the last decade." },
+  { title: "Something Is Killing the Children Vol. 1", category: "indie", price: 18, creator: "James Tynion IV & Werther Dell'Edera", publisherName: "BOOM! Studios", description: "When children start vanishing in a small Wisconsin town, a stranger named Erica Slaughter arrives to hunt what's responsible." },
+  { title: "Black Hammer Vol. 1", category: "indie", price: 20, creator: "Jeff Lemire & Dean Ormston", publisherName: "Dark Horse", description: "A group of forgotten superheroes are trapped in a small rural town by a mysterious event. A love letter to golden age comics." },
+];
+
+const displayProducts = products.length > 0 ? products : fallbackProducts;
+---
+
+<section class="featured-section" id="featured">
+  <div class="container">
+    <div class="section-label reveal">📖 Featured Titles</div>
+    <div class="section-title reveal reveal-delay-1">Fresh off the shelves.</div>
+
+    <div class="featured-grid">
+      {displayProducts.map((product: any, index: number) => (
+        <div class="featured-card reveal">
+          <div class="featured-visual">
+            <div class="featured-cover">
+              <div class="cover-gradient" style={`background:${gradients[index % gradients.length]};`}></div>
+              <div class="cover-content">
+                <div class="pub-name">{product.publisherName || "Publisher"}</div>
+                <div class="book-title">{product.title}</div>
+              </div>
+            </div>
+          </div>
+          <div class="featured-info">
+            <div class="fi-label">{product.publisherName || "Publisher"}</div>
+            <div>
+              <span class={`featured-tag ${tagClasses[product.category] || "tag-indie"}`}>
+                {tagLabels[product.category] || product.category}
+              </span>
+            </div>
+            <h3>{product.title}</h3>
+            <p>{product.description || `By ${product.creator}. $${product.price}.`}</p>
+            <a href="#" class="view-link">View Title <span class="arrow">→</span></a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

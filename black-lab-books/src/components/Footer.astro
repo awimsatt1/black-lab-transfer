@@ -1,0 +1,41 @@
+---
+const year = new Date().getFullYear();
+---
+
+<!-- Contact CTA -->
+<section class="contact-cta" id="contact-cta">
+  <div class="blob blob-blue" style="width:500px;height:500px;top:-20%;left:20%;"></div>
+  <div class="blob blob-red" style="width:300px;height:300px;bottom:-10%;right:15%;"></div>
+  <h2 class="reveal">Want to partner up?<br>Let's talk comics.</h2>
+  <p class="reveal reveal-delay-1">
+    Whether you're a comic shop with overstock to move, an indie publisher looking for readers, or an event organizer who wants a pop-up — we'd love to hear from you.
+  </p>
+  <a href="mailto:hello@blacklabbooks.com" class="btn-main btn-fill reveal reveal-delay-2">✉️ Get in Touch</a>
+</section>
+
+<div class="container">
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="Black Lab Bookshop" class="footer-logo"style="width:80px;height:auto;">
+        <p class="footer-copy">© {year} Black Lab Bookshop. All rights reserved.<br>Lafayette, Tennessee.</p>
+      </div>
+      <div class="footer-right">
+        <div class="footer-social">
+          <a href="#">Instagram</a> | 
+          <a href="#">YouTube</a> | 
+          <a href="#">TikTok</a> | 
+          <a href="#">Substack</a>
+        </div>
+      </div>
+    </div>
+<button class="back-to-top" id="backToTop" style="display:block;margin:0 auto;white-space:nowrap;width:auto;min-width:120px;">↑ Back to top</button>
+<script>
+  document.getElementById('backToTop')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

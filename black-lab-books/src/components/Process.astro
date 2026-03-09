@@ -1,0 +1,157 @@
+---
+const steps = [
+  { num: "01", title: "Shops Consign", desc: "Local comic shops send us overstock trades and collected editions they need to move." },
+  { num: "02", title: "We Curate", desc: "We hand-pick the best titles and pair them with new indie releases from our publisher partners." },
+  { num: "03", title: "We Show Up", desc: "We set up at farmers markets, breweries, festivals, and community events near you." },
+  { num: "04", title: "You Discover", desc: "Browse, discover something new, and grab it at a great price. Consignment titles are priced well below retail." },
+  { num: "05", title: "Repeat", desc: "Shops move inventory, readers find books, publishers reach new audiences. Everybody wins." },
+];
+---
+
+<section class="process-section">
+  <div class="container">
+    <div class="section-label reveal">⚡ How It Works</div>
+    <div class="section-title reveal reveal-delay-1">Five steps. Zero friction.</div>
+    <div class="process-steps">
+      {steps.map((step, i) => (
+        <article class={`process-step reveal reveal-delay-${Math.min(i + 1, 4)}`}>
+          <div class="ps-header">
+            <span class="ps-num">{step.num}</span>
+            <span class="ps-pill">Step {i + 1}</span>
+          </div>
+          <div class="ps-body">
+            <h4>{step.title}</h4>
+            <p>{step.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-section {
+    padding: 5rem 0;
+    position: relative;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.75rem;
+    margin-top: 3rem;
+  }
+
+  .process-step {
+    position: relative;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 1.25rem;
+    background: rgba(10, 10, 14, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    transition:
+      transform 180ms ease-out,
+      box-shadow 180ms ease-out,
+      border-color 180ms ease-out,
+      background 180ms ease-out;
+    cursor: default;
+  }
+
+  .process-step::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent)
+      border-box;
+    mask: linear-gradient(#000 0 0) padding-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 180ms ease-out;
+    pointer-events: none;
+  }
+
+  .process-step::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 55%);
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+    pointer-events: none;
+  }
+
+  .process-step:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.22);
+    background: rgba(18, 18, 26, 0.98);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.6);
+  }
+
+  .process-step:hover::before,
+  .process-step:hover::after {
+    opacity: 1;
+  }
+
+  .ps-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 0.75rem;
+  }
+
+  .ps-num {
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.68);
+  }
+
+  .ps-pill {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.8);
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 60%);
+    white-space: nowrap;
+  }
+
+  .ps-body h4 {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+  }
+
+  .ps-body p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-step,
+    .process-step::before,
+    .process-step::after {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .process-section {
+      padding: 3.5rem 0;
+    }
+
+    .process-steps {
+      margin-top: 2.25rem;
+      gap: 1.25rem;
+    }
+  }
+</style>
