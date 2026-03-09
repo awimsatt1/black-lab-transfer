@@ -1,0 +1,27 @@
+---
+const steps = [
+  { num: "01", title: "Shops Consign", desc: "Local comic shops send us overstock trades and collected editions they need to move." },
+  { num: "02", title: "We Curate", desc: "We hand-pick the best titles and pair them with new indie releases from our publisher partners." },
+  { num: "03", title: "We Show Up", desc: "We set up at farmers markets, breweries, festivals, and community events near you." },
+  { num: "04", title: "You Discover", desc: "Browse, discover something new, and grab it at a great price. Consignment titles are priced well below retail." },
+  { num: "05", title: "Repeat", desc: "Shops move inventory, readers find books, publishers reach new audiences. Everybody wins." },
+];
+---
+
+<section class="process-section">
+  <div class="container">
+    <div class="section-label reveal">⚡ How It Works</div>
+    <div class="section-title reveal reveal-delay-1">Five steps. Zero friction.</div>
+    <div class="process-steps">
+      {steps.map((step, i) => (
+        <div class={`process-step reveal reveal-delay-${Math.min(i + 1, 4)}`}>
+          <div class="ps-num">{step.num}</div>
+          <div class="ps-body">
+            <h4>{step.title}</h4>
+            <p>{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

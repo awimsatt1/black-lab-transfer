@@ -1,0 +1,68 @@
+---
+// Nav component - no props needed, static
+---
+
+<nav class="topnav" id="topnav">
+  <a href="/" class="topnav-logo">
+    <img src="/logo.png" alt="Black Lab Bookshop">
+  </a>
+  <div class="topnav-right">
+    <button class="subscribe-btn" id="subscribe-btn">Subscribe to the Lab</button>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="fullscreen-menu" id="fullMenu">
+  <div class="menu-inner">
+    <div class="menu-links">
+      <a href="/" data-scroll="hero">Home</a>
+      <a href="/shop" data-scroll="featured">Shop</a>
+      <a href="/#services" data-scroll="services">About</a>
+      <a href="/#events" data-scroll="events">Events</a>
+      <a href="/#contact-cta" data-scroll="contact-cta">Contact</a>
+      <a href="#" style="color:var(--grey);opacity:.4;">Blog</a>
+    </div>
+    <div class="menu-social">
+      <a href="#">📸 Instagram</a>
+      <a href="#">🎬 YouTube</a>
+      <a href="#">🎵 TikTok</a>
+      <a href="#">📰 Substack</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const fullMenu = document.getElementById('fullMenu');
+  const subscribeBtn = document.getElementById('subscribe-btn');
+
+  function toggleMenu() {
+    hamburger?.classList.toggle('open');
+    fullMenu?.classList.toggle('open');
+    document.body.style.overflow = fullMenu?.classList.contains('open') ? 'hidden' : '';
+  }
+
+  hamburger?.addEventListener('click', toggleMenu);
+
+  // Close menu and scroll to section
+  fullMenu?.querySelectorAll('a[data-scroll]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = (e.currentTarget as HTMLAnchorElement).dataset.scroll;
+      if (target) {
+        e.preventDefault();
+        toggleMenu();
+        setTimeout(() => {
+          document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+      }
+    });
+  });
+
+  // Subscribe button scrolls to contact
+  subscribeBtn?.addEventListener('click', () => {
+    document.getElementById('contact-cta')?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>

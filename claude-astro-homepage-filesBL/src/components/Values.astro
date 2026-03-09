@@ -1,0 +1,24 @@
+---
+const values = [
+  { emoji: "🚀", title: "Support Local Shops", desc: "Every consignment sale puts money back in the hands of your neighborhood comic shop." },
+  { emoji: "📣", title: "Champion Indie Creators", desc: "We spotlight titles from independent publishers that deserve more readers." },
+  { emoji: "🌎", title: "Bring Comics to Everyone", desc: "Not everyone lives near a comic shop. We bring the shop to you." },
+  { emoji: "🔥", title: "Never Stand Still", desc: "New titles every week. New pop-up locations every month. Always moving, always fresh." },
+];
+---
+
+<section class="values-section">
+  <div class="container">
+    <div class="section-label reveal">💛 Why We Do It</div>
+    <div class="section-title reveal reveal-delay-1">What drives us.</div>
+    <div class="values-grid">
+      {values.map((value, i) => (
+        <div class={`value-card reveal reveal-delay-${Math.min(i + 1, 4)}`}>
+          <div class="vc-emoji">{value.emoji}</div>
+          <h4>{value.title}</h4>
+          <p>{value.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+---
+import { sanity } from "../lib/sanity";
+
+// Fetch publishers from Sanity
+const publishers = await sanity.fetch(`*[_type == "publisher"] | order(name asc){ name }`);
+
+// Fallback if no publishers in Sanity yet
+const publisherNames = publishers.length > 0 
+  ? publishers.map((p: any) => p.name.toUpperCase()) 
+  : ["SKYBOUND", "IMAGE COMICS", "BOOM! STUDIOS", "ONI PRESS", "DARK HORSE", "IDW", "AFTERSHOCK"];
+
+// Color classes cycle
+const colorClasses = ["tc-sky", "tc-image", "tc-boom", "tc-oni", "tc-dark", "tc-idw", "tc-after"];
+---
+
+<div class="ticker-section">
+  <div class="ticker-track">
+    {/* Render twice for seamless loop */}
+    {[...publisherNames, ...publisherNames].map((name: string, i: number) => (
+      <span class={`ticker-item ${colorClasses[i % colorClasses.length]}`}>{name}</span>
+    ))}
+  </div>
+</div>

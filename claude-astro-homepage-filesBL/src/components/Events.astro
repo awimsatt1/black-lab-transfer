@@ -1,0 +1,78 @@
+---
+import { sanity } from "../lib/sanity";
+
+// Fetch upcoming events from Sanity (next 3)
+const events = await sanity.fetch(`
+  *[_type == "event" && date >= now()] | order(date asc)[0...3]{
+    title,
+    slug,
+    date,
+    location,
+    venueType,
+    description,
+    link
+  }
+`);
+
+// Fallback events
+const fallbackEvents = [
+  { title: "Lafayette Farmers Market", venueType: "Farmers Market", date: "2026-03-15", location: "Lafayette Town Square", description: "Kicking off spring market season with a full spread of trades, collected editions, and new indie arrivals.", time: "8 AM – 1 PM" },
+  { title: "Comics & Craft Beer Night", venueType: "Brewery", date: "2026-03-22", location: "TBD Brewery, Nashville", description: "Browse the stacks while sipping local brews. BOOM! Studios spotlight. Buy 3, get one free on consignment.", time: "5 PM – 9 PM" },
+  { title: "Free Comic Book Day Pop-Up", venueType: "Community Event", date: "2026-04-05", location: "Location TBA", description: "Celebrating FCBD with free titles, giveaways, and deep discounts on the entire consignment stock.", time: "10 AM – 4 PM" },
+];
+
+const displayEvents = events.length > 0 ? events : fallbackEvents;
+
+// Format date helper
+function formatDate(dateStr: string) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return { month: months[d.getMonth()], day: d.getDate().toString() };
+}
+
+// Venue type labels
+const venueLabels: Record<string, string> = {
+  "Farmers Market": "Pop-Up Shop",
+  "Brewery": "Brewery Pop-Up",
+  "Comic Shop": "Shop Event",
+  "Festival": "Festival",
+  "Pop-Up": "Pop-Up Shop",
+  "Community Event": "Community Event",
+};
+---
+
+<section class="events-section" id="events">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div class="section-label reveal">📅 Where to Find Us</div>
+        <div class="section-title reveal reveal-delay-1">Upcoming pop-ups.</div>
+      </div>
+      <a href="#" class="view-link reveal" style="padding-bottom:12px;">View All Events <span class="arrow">→</span></a>
+    </div>
+    <div class="events-grid">
+      {displayEvents.map((event: any, i: number) => {
+        const { month, day } = formatDate(event.date);
+        return (
+          <div class={`event-card reveal ${i > 0 ? `reveal-delay-${i}` : ''}`}>
+            <div class="event-top">
+              <div class="event-date-badge">
+                <div class="edb-month">{month}</div>
+                <div class="edb-day">{day}</div>
+              </div>
+              <div>
+                <div class="event-type">{venueLabels[event.venueType] || event.venueType || "Pop-Up"}</div>
+                <h3>{event.title}</h3>
+              </div>
+            </div>
+            <p>{event.description}</p>
+            <div class="event-meta">
+              <span>📍 {event.location}</span>
+              {event.time && <span>🕐 {event.time}</span>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
